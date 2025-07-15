@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="register-screen" id="screen5">
+    <div class="register-container">
+      <div class="register-title">Create Account</div>
+      <form class="register-form" autocomplete="off">
+        <div class="register-field">
+          <label for="register-username">User name</label>
+          <input type="text" id="register-username" name="username" placeholder="Enter your username" required />
+        </div>
+        <div class="register-field">
+          <label for="register-password">Password</label>
+          <input type="password" id="register-password" name="password" placeholder="Enter your password" required />
+        </div>
+        <div class="register-field">
+          <label for="register-confirm-password">Confirm Password</label>
+          <input type="password" id="register-confirm-password" name="confirm-password" placeholder="Confirm your password" required />
+        </div>
+        <button type="submit" class="register-btn">Create Account</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.querySelector('.register-form').onsubmit = function(e) {
+      e.preventDefault();
+      // Simulate account creation success
+      window.location.href = 'screen4.html';
+    };
+  </script>
+  <script>
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        window.location.href = 'desktop5.html';
+      }
+    });
+  </script>
+</body>
+</html> 

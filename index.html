@@ -1,25 +1,533 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MovieStream - Watch Movies Online Free</title>
-    <meta name="description" content="Watch the latest movies online for free. Stream HD movies, discover trending films, and enjoy unlimited entertainment on MovieStream." />
-    <meta name="author" content="MovieStream" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Control of Your Finances</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <!-- Animated background shapes -->
+  <div class="animated-bg-shapes">
+    <div class="bg-shape shape1"></div>
+    <div class="bg-shape shape2"></div>
+    <div class="bg-shape shape3"></div>
+  </div>
+  <!-- Confetti canvas -->
+  <canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:999;display:none;"></canvas>
+  <!-- Screen 1: Landing -->
+  <div class="centered-container animated-screen" id="screen1">
+    <img class="main-illustration parallax-img" src="expenses-illustration.jpg" alt="Track your expenses illustration" />
+    <div class="headline-block">
+      <div class="headline-main">Take Control of Your Finances</div>
+      <div class="headline-sub">Track your spending, and grow your savings—all in one place.</div>
+    </div>
+    <button class="next-btn" id="nextBtn">
+      <span class="next-text">Next</span>
+      <span class="arrow-icon">&#8250;</span>
+    </button>
+  </div>
 
-    <meta property="og:title" content="MovieStream - Watch Movies Online Free" />
-    <meta property="og:description" content="Watch the latest movies online for free. Stream HD movies, discover trending films, and enjoy unlimited entertainment on MovieStream." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  <!-- Screen 2: Welcome Gradient -->
+  <div class="welcome-gradient-screen" id="screen2" style="display:none;">
+    <div class="gradient-bg"></div>
+    <div class="ellipse ellipse1"></div>
+    <div class="ellipse ellipse2"></div>
+    <div class="ellipse ellipse3"></div>
+    <div class="ellipse ellipse4"></div>
+    <div class="ellipse ellipse5"></div>
+    <div class="welcome-content">
+      <div class="welcome-title">Welcome to</div>
+      <div class="welcome-main">Expense Tracker – Your Smart Money Companion</div>
+      <div class="welcome-desc">
+        Take control of your finances with ease. Track your daily expenses, monitor investments, grow your savings, and visualize your financial health through graphs and pie charts. Log in to manage your budget, stay on top of your goals, and make smarter money decisions every single day.
+      </div>
+      <button class="get-started-btn">Get Started</button>
+    </div>
+  </div>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@moviestream" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+  <!-- Screen 3: Sign Up / Login -->
+  <div class="signup-screen" id="screen3" style="display:none;">
+    <div class="signup-container">
+      <button class="signup-btn google" id="googleSignInBtn">
+        <span class="signup-icon google-icon">
+          <!-- Google SVG -->
+          <svg width="28" height="28" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M24 9.5c3.54 0 6.09 1.53 7.49 2.81l5.54-5.54C33.09 3.36 28.91 1.5 24 1.5 14.82 1.5 6.98 7.98 4.06 16.44l6.81 5.29C12.82 15.09 17.01 9.5 24 9.5z"/><path fill="#34A853" d="M46.5 24c0-1.64-.15-3.22-.42-4.74H24v9.24h12.7c-.55 2.97-2.19 5.48-4.67 7.18l7.19 5.59C43.98 37.02 46.5 31.02 46.5 24z"/><path fill="#FBBC05" d="M9.06 28.73A14.98 14.98 0 0 1 7.5 24c0-1.65.28-3.24.78-4.73l-6.81-5.29A23.94 23.94 0 0 0 0 24c0 3.91.94 7.61 2.61 10.89l6.45-6.16z"/><path fill="#EA4335" d="M24 46.5c6.48 0 11.92-2.15 15.89-5.86l-7.19-5.59c-2.01 1.35-4.59 2.15-8.7 2.15-6.99 0-11.18-5.59-12.13-10.23l-6.81 5.29C6.98 40.02 14.82 46.5 24 46.5z"/></g></svg>
+        </span>
+        CONNECT WITH GOOGLE
+      </button>
+      <button class="signup-btn facebook" id="facebookSignInBtn">
+        <span class="signup-icon facebook-icon">
+          <!-- Facebook SVG -->
+          <svg width="28" height="28" viewBox="0 0 32 32"><path fill="#1877F3" d="M29 0H3C1.3 0 0 1.3 0 3v26c0 1.7 1.3 3 3 3h13V20h-4v-5h4v-3.6C16 7.7 18.2 6 21.2 6c1.3 0 2.5.1 2.8.1v4h-1.9c-1.5 0-1.8.7-1.8 1.8V15h5l-1 5h-4v12h7c1.7 0 3-1.3 3-3V3c0-1.7-1.3-3-3-3z"/></svg>
+        </span>
+        CONNECT WITH FACEBOOK
+      </button>
+      <button class="signup-btn email">
+        <span class="signup-icon email-icon">
+          <!-- Email SVG -->
+          <svg width="28" height="28" viewBox="0 0 24 24"><path fill="#222" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 2v.01L12 13 4 6.01V6h16zM4 20v-9.99l7.99 7.99c.39.39 1.02.39 1.41 0L20 10.01V20H4z"/></svg>
+        </span>
+        SIGN UP USING EMAIL
+      </button>
+      <div class="login-row">
+        <span class="already-account">Already have an account?</span>
+        <a href="#" class="login-link">LOG IN</a>
+      </div>
+      <div class="create-account-row">
+        <span class="no-account">Don't have an account?</span>
+        <a href="#" class="create-account-link">CREATE ACCOUNT</a>
+      </div>
+    </div>
+    <div class="register-container" id="registerSection" style="display:none;">
+      <div class="register-title">Create Account</div>
+      <form class="register-form" autocomplete="off">
+        <div class="register-field">
+          <label for="register-username">User name</label>
+          <input type="text" id="register-username" name="username" placeholder="Enter your username" required />
+        </div>
+        <div class="register-field">
+          <label for="register-password">Password</label>
+          <input type="password" id="register-password" name="password" placeholder="Enter your password" required />
+        </div>
+        <div class="register-field">
+          <label for="register-confirm-password">Confirm Password</label>
+          <input type="password" id="register-confirm-password" name="confirm-password" placeholder="Confirm your password" required />
+        </div>
+        <button type="submit" class="register-btn">Create Account</button>
+      </form>
+    </div>
+  </div>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+  <!-- Screen 4: Login Form -->
+  <div class="login-screen" id="screen4" style="display:none;">
+    <div class="login-bg"></div>
+    <div class="login-container">
+      <div class="login-title">Welcome</div>
+      <div class="login-subtitle">Login to Your Account</div>
+      <div class="login-icon-anim">
+        <svg id="lock-anim" width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="14" y="24" width="28" height="20" rx="6" fill="#fff" stroke="#822ff6" stroke-width="2.5"/>
+          <rect x="20" y="16" width="16" height="16" rx="8" fill="none" stroke="#f0187b" stroke-width="2.5"/>
+          <circle id="lock-dot" cx="28" cy="34" r="2.5" fill="#f0187b"/>
+        </svg>
+      </div>
+      <form class="login-form" autocomplete="off">
+        <div class="login-field floating-label username-field">
+          <span class="input-icon user-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="11" cy="8" r="4" stroke="#3498db" stroke-width="2" fill="none"/>
+              <path d="M4 18c0-3 3.5-5 7-5s7 2 7 5" stroke="#3498db" stroke-width="2" fill="none" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <input type="text" id="login-username" name="username" placeholder=" " required />
+          <label for="login-username">User name</label>
+        </div>
+        <div class="login-field floating-label password-field">
+          <span class="input-icon lock-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="10" width="12" height="8" rx="3" stroke="#f0187b" stroke-width="2" fill="none"/>
+              <rect x="8" y="6" width="6" height="8" rx="3" stroke="#822ff6" stroke-width="2" fill="none"/>
+              <circle cx="11" cy="15" r="1.5" fill="#f0187b"/>
+            </svg>
+          </span>
+          <input type="password" id="login-password" name="password" placeholder=" " required />
+          <label for="login-password">Password</label>
+          <span class="toggle-password" tabindex="0" aria-label="Show password">
+            <svg id="eye-icon" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="11" cy="11" rx="8" ry="5" stroke="#888" stroke-width="2"/>
+              <circle cx="11" cy="11" r="2.5" fill="#888"/>
+            </svg>
+          </span>
+        </div>
+        <button type="submit" class="login-btn" disabled><span class="btn-text">Enter</span><span class="btn-spinner" style="display:none;"></span></button>
+      </form>
+      <div id="login-ready-msg" class="login-ready-msg" style="display:none;">✅ Ready to Login!</div>
+    </div>
+  </div>
+
+  <!-- Screen 5: Registration (for direct access) -->
+  <div class="register-screen" id="screen5" style="display:none;">
+    <div class="register-container">
+      <div class="register-title">Create Account</div>
+      <form class="register-form" autocomplete="off">
+        <div class="register-field">
+          <label for="register-username-5">User name</label>
+          <input type="text" id="register-username-5" name="username" placeholder="Enter your username" required />
+        </div>
+        <div class="register-field">
+          <label for="register-password-5">Password</label>
+          <input type="password" id="register-password-5" name="password" placeholder="Enter your password" required />
+        </div>
+        <div class="register-field">
+          <label for="register-confirm-password-5">Confirm Password</label>
+          <input type="password" id="register-confirm-password-5" name="confirm-password" placeholder="Confirm your password" required />
+        </div>
+        <button type="submit" class="register-btn">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Screen 6: Dashboard -->
+  <div class="dashboard-screen" id="screen6" style="display:none;">
+    <div class="dashboard-container">
+      <div class="dashboard-title">Welcome to Your Dashboard!</div>
+      <div class="dashboard-desc">This is your personal finance dashboard. Here you will be able to track expenses, view charts, and manage your budget.<br><br><em>(Dashboard features coming soon!)</em></div>
+    </div>
+  </div>
+  <script>
+    // Navigation logic for all screens
+    function showScreen(screenId) {
+      ["screen1","screen2","screen3","screen4","screen5","screen6"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = (id === screenId) ? (id === "screen2" ? "flex" : "block") : "none";
+      });
+      // Special case for flex screens
+      if (screenId === "screen2" || screenId === "screen3" || screenId === "screen4" || screenId === "screen5" || screenId === "screen6") {
+        const el = document.getElementById(screenId);
+        if (el) el.style.display = "flex";
+      }
+    }
+    // --- Animated lock icon ---
+    function animateLock() {
+      const lock = document.getElementById('lock-anim');
+      const dot = document.getElementById('lock-dot');
+      if (lock && dot) {
+        dot.animate([
+          { transform: 'translateY(0)' },
+          { transform: 'translateY(6px)' },
+          { transform: 'translateY(0)' }
+        ], {
+          duration: 1200,
+          iterations: Infinity,
+          easing: 'ease-in-out'
+        });
+        lock.animate([
+          { filter: 'drop-shadow(0 0 0px #f0187b)' },
+          { filter: 'drop-shadow(0 0 12px #f0187b)' },
+          { filter: 'drop-shadow(0 0 0px #f0187b)' }
+        ], {
+          duration: 1200,
+          iterations: Infinity,
+          easing: 'ease-in-out'
+        });
+      }
+    }
+    animateLock();
+    // --- Password visibility toggle ---
+    const pwField = document.getElementById('login-password');
+    const togglePw = document.querySelector('.toggle-password');
+    if (pwField && togglePw) {
+      togglePw.addEventListener('click', function() {
+        if (pwField.type === 'password') {
+          pwField.type = 'text';
+          togglePw.querySelector('ellipse').setAttribute('stroke', '#822ff6');
+          togglePw.querySelector('circle').setAttribute('fill', '#822ff6');
+        } else {
+          pwField.type = 'password';
+          togglePw.querySelector('ellipse').setAttribute('stroke', '#888');
+          togglePw.querySelector('circle').setAttribute('fill', '#888');
+        }
+      });
+      togglePw.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') togglePw.click();
+      });
+    }
+    // --- Confetti effect ---
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.style.display = 'block';
+      const ctx = canvas.getContext('2d');
+      const confetti = [];
+      for (let i = 0; i < 120; i++) {
+        confetti.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * -canvas.height,
+          r: 6 + Math.random() * 8,
+          d: 2 + Math.random() * 4,
+          color: `hsl(${Math.random()*360},90%,60%)`,
+          tilt: Math.random() * 10 - 5,
+          tiltAngle: 0,
+          tiltAngleInc: (Math.random() * 0.07) + 0.05
+        });
+      }
+      let frame = 0;
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confetti.forEach(c => {
+          ctx.beginPath();
+          ctx.ellipse(c.x, c.y, c.r, c.r/2, c.tilt, 0, 2 * Math.PI);
+          ctx.fillStyle = c.color;
+          ctx.fill();
+        });
+        update();
+        frame++;
+        if (frame < 120) requestAnimationFrame(draw);
+        else setTimeout(() => { canvas.style.display = 'none'; }, 1200);
+      }
+      function update() {
+        confetti.forEach(c => {
+          c.y += c.d;
+          c.x += Math.sin(c.tiltAngle) * 2;
+          c.tiltAngle += c.tiltAngleInc;
+          if (c.y > canvas.height) {
+            c.y = -10;
+            c.x = Math.random() * canvas.width;
+          }
+        });
+      }
+      draw();
+    }
+    // --- Animated background shapes ---
+    // No extra JS needed, CSS handles animation
+    // --- Floating label animation for form fields ---
+    document.querySelectorAll('.floating-label input').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentNode.classList.add('focused');
+        this.parentNode.classList.add('glow');
+        if (this.id === 'login-username') {
+          this.parentNode.classList.add('user-glow');
+        } else if (this.id === 'login-password') {
+          this.parentNode.classList.add('pw-glow');
+        }
+      });
+      input.addEventListener('blur', function() {
+        if (!this.value) this.parentNode.classList.remove('focused');
+        this.parentNode.classList.remove('glow');
+        this.parentNode.classList.remove('user-glow');
+        this.parentNode.classList.remove('pw-glow');
+      });
+      if (input.value) input.parentNode.classList.add('focused');
+    });
+    // --- Animated screen transitions ---
+    function animateScreenTransition(fromId, toId) {
+      const fromScreen = document.getElementById(fromId);
+      const toScreen = document.getElementById(toId);
+      if (fromScreen) {
+        fromScreen.classList.add('fade-out');
+        setTimeout(() => {
+          fromScreen.style.display = 'none';
+          fromScreen.classList.remove('fade-out');
+          if (toScreen) {
+            toScreen.style.display = (toId === 'screen2' ? 'flex' : 'block');
+            toScreen.classList.add('fade-in');
+            setTimeout(() => toScreen.classList.remove('fade-in'), 700);
+          }
+        }, 600);
+      } else if (toScreen) {
+        toScreen.style.display = (toId === 'screen2' ? 'flex' : 'block');
+        toScreen.classList.add('fade-in');
+        setTimeout(() => toScreen.classList.remove('fade-in'), 700);
+      }
+    }
+    // Override navigation logic to use animation
+    function showScreen(screenId) {
+      const current = document.querySelector('.animated-screen:not([style*="display: none"])');
+      const currentId = current ? current.id : null;
+      if (currentId && currentId !== screenId) {
+        animateScreenTransition(currentId, screenId);
+      } else {
+        ["screen1","screen2","screen3","screen4","screen5","screen6"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = (id === screenId) ? (id === "screen2" ? "flex" : "block") : "none";
+        });
+        if (screenId === "screen2" || screenId === "screen3" || screenId === "screen4" || screenId === "screen5" || screenId === "screen6") {
+          const el = document.getElementById(screenId);
+          if (el) el.style.display = "flex";
+        }
+      }
+    }
+    // Screen 1 -> Screen 2
+    document.getElementById('nextBtn').onclick = function() {
+      showScreen('screen2');
+    };
+    // Screen 2 -> Screen 3
+    document.querySelector('.get-started-btn').onclick = function() {
+      showScreen('screen3');
+      // Reset signup/register view
+      document.querySelector('.signup-container').style.display = 'flex';
+      document.getElementById('registerSection').style.display = 'none';
+    };
+    // OAuth sign-in handlers (placeholders)
+    document.getElementById('googleSignInBtn').onclick = function() {
+      alert('Google Sign-In flow goes here!');
+    };
+    document.getElementById('facebookSignInBtn').onclick = function() {
+      alert('Facebook Sign-In flow goes here!');
+    };
+    // Show login screen on LOG IN click
+    document.querySelector('.login-link').onclick = function(e) {
+      e.preventDefault();
+      showScreen('screen4');
+    };
+    // Show registration section in screen3
+    document.querySelector('.create-account-link').onclick = function(e) {
+      e.preventDefault();
+      document.querySelector('.signup-container').style.display = 'none';
+      document.getElementById('registerSection').style.display = 'flex';
+    };
+    // Registration form in screen3
+    document.querySelector('#registerSection .register-form').onsubmit = function(e) {
+      e.preventDefault();
+      const username = document.getElementById('register-username').value;
+      const password = document.getElementById('register-password').value;
+      const confirmPassword = document.getElementById('register-confirm-password').value;
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+      // Save to localStorage
+      localStorage.setItem('registeredUsername', username);
+      localStorage.setItem('registeredPassword', password);
+      showScreen('screen4');
+    };
+    // Registration form in screen5
+    document.querySelector('#screen5 .register-form').onsubmit = function(e) {
+      e.preventDefault();
+      const username = document.getElementById('register-username-5').value;
+      const password = document.getElementById('register-password-5').value;
+      const confirmPassword = document.getElementById('register-confirm-password-5').value;
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+      // Save to localStorage
+      localStorage.setItem('registeredUsername', username);
+      localStorage.setItem('registeredPassword', password);
+      showScreen('screen4');
+    };
+    // Login form logic
+    const loginForm = document.querySelector('.login-form');
+    if (loginForm) {
+      const origSubmit = loginForm.onsubmit;
+      loginForm.onsubmit = function(e) {
+        e.preventDefault();
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+        const regUsername = localStorage.getItem('registeredUsername');
+        const regPassword = localStorage.getItem('registeredPassword');
+        const correctUsername = 'user';
+        const correctPassword = 'pass123';
+        let errorMsg = document.getElementById('login-error-msg');
+        if (!errorMsg) {
+          errorMsg = document.createElement('div');
+          errorMsg.id = 'login-error-msg';
+          errorMsg.style.color = '#f0187b';
+          errorMsg.style.marginTop = '12px';
+          errorMsg.style.fontFamily = 'Arial, sans-serif';
+          errorMsg.style.fontSize = '1.1rem';
+          loginForm.appendChild(errorMsg);
+        }
+        // Show loading spinner
+        const btn = loginForm.querySelector('.login-btn');
+        const btnText = btn.querySelector('.btn-text');
+        const btnSpinner = btn.querySelector('.btn-spinner');
+        btnSpinner.style.display = 'inline-block';
+        btnText.style.display = 'none';
+        btnSpinner.innerHTML = '<svg width="22" height="22" viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="none" stroke="#822ff6" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.8s" repeatCount="indefinite"/></circle></svg>';
+        if ((regUsername && regPassword && username === regUsername && password === regPassword) ||
+            (username === correctUsername && password === correctPassword)) {
+          errorMsg.textContent = '';
+          launchConfetti();
+          // Animate form out
+          loginForm.classList.add('form-success');
+          setTimeout(() => { window.location.href = 'desktop5.html'; }, 1200);
+        } else {
+          errorMsg.textContent = 'Incorrect username or password.';
+          document.querySelector('.login-form').classList.add('shake');
+          setTimeout(() => document.querySelector('.login-form').classList.remove('shake'), 500);
+          // Remove spinner
+          btnSpinner.style.display = 'none';
+          btnText.style.display = 'inline-block';
+        }
+        // Remove spinner on success after animation
+        setTimeout(() => {
+          btnSpinner.style.display = 'none';
+          btnText.style.display = 'inline-block';
+        }, 1200);
+      };
+    }
+    // --- Animate icons on focus ---
+    function animateFieldIcon(fieldClass, iconClass, anim) {
+      const field = document.querySelector(fieldClass);
+      if (!field) return;
+      const input = field.querySelector('input');
+      const icon = field.querySelector(iconClass);
+      if (!input || !icon) return;
+      input.addEventListener('focus', () => {
+        icon.classList.add(anim);
+      });
+      input.addEventListener('blur', () => {
+        icon.classList.remove(anim);
+      });
+    }
+    animateFieldIcon('.username-field', '.user-icon', 'icon-wiggle');
+    animateFieldIcon('.password-field', '.lock-icon', 'icon-bounce');
+    // Parallax effect for ellipses on welcome screen
+    const ellipses = [
+      { el: null, factorX: 0.04, factorY: 0.04 },
+      { el: null, factorX: 0.07, factorY: 0.06 },
+      { el: null, factorX: -0.09, factorY: 0.08 },
+      { el: null, factorX: 0.03, factorY: -0.05 },
+      { el: null, factorX: -0.06, factorY: -0.07 }
+    ];
+    window.addEventListener('DOMContentLoaded', function() {
+      ellipses[0].el = document.querySelector('.ellipse1');
+      ellipses[1].el = document.querySelector('.ellipse2');
+      ellipses[2].el = document.querySelector('.ellipse3');
+      ellipses[3].el = document.querySelector('.ellipse4');
+      ellipses[4].el = document.querySelector('.ellipse5');
+      showScreen('screen1'); // Ensure only screen1 is visible on load
+    });
+    document.addEventListener('mousemove', function(e) {
+      const screen2 = document.getElementById('screen2');
+      if (screen2.style.display !== 'flex') return;
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = e.clientY / window.innerHeight - 0.5;
+      ellipses.forEach(({el, factorX, factorY}) => {
+        if (el) {
+          el.style.transform = `translate(${x * factorX * 200}px, ${y * factorY * 200}px)`;
+        }
+      });
+    });
+    // --- Parallax effect for landing illustration ---
+    document.addEventListener('mousemove', function(e) {
+      const img = document.querySelector('.parallax-img');
+      if (img) {
+        const x = (e.clientX / window.innerWidth - 0.5) * 30;
+        const y = (e.clientY / window.innerHeight - 0.5) * 30;
+        img.style.transform = `translate(${x}px, ${y}px) scale(1.04)`;
+      }
+    });
+    document.addEventListener('mouseleave', function() {
+      const img = document.querySelector('.parallax-img');
+      if (img) img.style.transform = '';
+    });
+    // --- Ready to Login message and button activation ---
+    function updateLoginReady() {
+      const user = document.getElementById('login-username');
+      const pw = document.getElementById('login-password');
+      const btn = document.querySelector('.login-btn');
+      const msg = document.getElementById('login-ready-msg');
+      if (user && pw && btn && msg) {
+        if (user.value.trim() && pw.value.trim()) {
+          btn.disabled = false;
+          btn.classList.add('active');
+          msg.style.display = 'block';
+        } else {
+          btn.disabled = true;
+          btn.classList.remove('active');
+          msg.style.display = 'none';
+        }
+      }
+    }
+    document.getElementById('login-username').addEventListener('input', updateLoginReady);
+    document.getElementById('login-password').addEventListener('input', updateLoginReady);
+    updateLoginReady();
+  </script>
+</body>
+</html> 

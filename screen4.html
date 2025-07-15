@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="login-screen" id="screen4">
+    <div class="login-bg"></div>
+    <div class="login-container">
+      <div class="login-title">Welcome</div>
+      <div class="login-subtitle">Login to Your Account</div>
+      <form class="login-form" autocomplete="off">
+        <div class="login-field">
+          <label for="login-username">User name</label>
+          <input type="text" id="login-username" name="username" placeholder="Enter your username" required />
+        </div>
+        <div class="login-field">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" name="password" placeholder="Enter your password" required />
+        </div>
+        <button type="submit" class="login-btn">Enter</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.querySelector('.login-form').onsubmit = function(e) {
+      e.preventDefault();
+      const username = document.getElementById('login-username').value;
+      const password = document.getElementById('login-password').value;
+      // Simulate correct credentials (replace with real check in production)
+      const correctUsername = 'user';
+      const correctPassword = 'pass123';
+      let errorMsg = document.getElementById('login-error-msg');
+      if (!errorMsg) {
+        errorMsg = document.createElement('div');
+        errorMsg.id = 'login-error-msg';
+        errorMsg.style.color = '#f0187b';
+        errorMsg.style.marginTop = '12px';
+        errorMsg.style.fontFamily = 'Arial, sans-serif';
+        errorMsg.style.fontSize = '1.1rem';
+        document.querySelector('.login-form').appendChild(errorMsg);
+      }
+      if (username === correctUsername && password === correctPassword) {
+        errorMsg.textContent = '';
+        // Proceed to next step (replace with redirect or dashboard)
+        alert('Login successful!');
+      } else {
+        errorMsg.textContent = 'Incorrect username or password.';
+      }
+    };
+  </script>
+</body>
+</html> 

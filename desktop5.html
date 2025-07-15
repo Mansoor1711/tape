@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1440, initial-scale=1.0">
+  <title>Desktop - 5</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: #19bee3;
+      font-family: 'Open Sans', sans-serif;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      min-width: 100vw;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .desktop5-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+    /* Remove all background overlays and SVGs */
+    .charts-bg-svg, body::before, .bg-shape, .bg-shape1, .bg-shape2, .bg-shape3 { display: none !important; }
+    .desktop5-wrapper {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      min-height: 600px;
+      margin: 0;
+      box-shadow: none;
+      border-radius: 0;
+      background: none;
+      overflow: hidden;
+    }
+    .sidebar, .main-content {
+      background: transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    .sidebar::before, .main-content::before,
+    .parallax-bg, .overlay-bg {
+      display: none !important;
+    }
+    .main-content > *, .sidebar > * {
+      position: relative;
+      z-index: 2;
+    }
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .profile-img {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+    .profile-img {
+      width: 500px;
+      height: 480px;
+      border-radius: 100%;
+      background: #af2ebe;
+      margin-bottom: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .profile-label {
+      background: #ae48c8;
+      color: #fff;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 60px;
+      border-radius: 16px;
+      padding: 24px 96px;
+      margin-bottom: 32px;
+      display: inline-block;
+      letter-spacing: 1px;
+      margin-top: 0;
+    }
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      margin-bottom: auto;
+      margin-top: 24px;
+    }
+    .sidebar-menu span {
+      color: #3a59bc;
+      font-size: 90px;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px #2a002a44;
+    }
+    .logout {
+      color: #fff;
+      font-size: 70px;
+      font-family: 'Open Sans', sans-serif;
+      position: absolute;
+      left: 32px;
+      bottom: 32px;
+      opacity: 1;
+      cursor: pointer;
+    }
+    .logout::before {
+      content: '\2192';
+      margin-right: 8px;
+    }
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(ellipse at bottom right, #02d0a0 0%, #73beda 100%);
+      padding: 0 32px;
+      gap: 200px;
+      min-width: 0;
+      min-height: 100vh;
+    }
+    .main-box {
+      width: 1600px;
+      max-width: 100vw;
+      border-radius: 120px;
+      background: #008cf0;
+      opacity: 0.9;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 0 96px 0;
+      box-shadow: 0 4px 32px 0 rgba(31, 38, 135, 0.07);
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, opacity 0.2s;
+      outline: none;
+      border: none;
+    }
+    .main-box:hover, .main-box:focus {
+      background: #1680d1;
+      color: #f5f5f5;
+      box-shadow: 0 8px 32px 0 rgba(37, 99, 235, 0.15);
+    }
+    .main-box:last-child {
+      margin-bottom: 0;
+    }
+    .main-box .main-title {
+      font-size: 120px;
+      color: #fff;
+      font-family: 'Open Sans', sans-serif;
+      margin-bottom: 0;
+      text-align: center;
+      font-weight: 700;
+    }
+    .main-box .main-subtitle {
+      font-size: 70px;
+      color: #fff;
+      font-family: 'Open Sans', sans-serif;
+      margin-top: 8px;
+      text-align: center;
+      font-weight: 400;
+    }
+    .profile-label, .sidebar-menu span {
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      outline: none;
+      border: none;
+      display: inline-block;
+    }
+    .profile-label:focus, .profile-label:hover,
+    .sidebar-menu span:focus, .sidebar-menu span:hover {
+      background: #b35bb7;
+      color: #fff;
+      box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.10);
+    }
+    @media (max-width: 900px) {
+      .desktop5-wrapper {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100vw;
+        min-width: unset;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 24px 0 0 24px;
+        height: 220px;
+      }
+      .main-content {
+        padding: 0 8px;
+      }
+      .main-box {
+        width: 98vw;
+        min-width: unset;
+      }
+      .logout {
+        left: 16px;
+        bottom: 16px;
+      }
+    }
+    .budget-modal label {
+      font-size: 10px;
+      margin-bottom: 2px;
+    }
+    .budget-modal .account-select {
+      font-size: 10px;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    .budget-modal .account-select img {
+      width: 10px;
+      height: 10px;
+      margin-right: 2px;
+    }
+    .budget-modal select, .budget-modal input[type="number"] {
+      font-size: 10px;
+      padding: 2px 4px;
+      border-radius: 4px;
+      min-width: 20px;
+      width: 100%;
+    }
+    .budget-modal .amount-group {
+      border-radius: 4px;
+      padding: 0 2px 0 0;
+      width: 30px;
+    }
+    .budget-modal .plus-sign {
+      font-size: 10px;
+      margin: 0 2px 0 4px;
+    }
+    .budget-modal .currency-select {
+      width: 24px;
+      margin-left: 2px;
+    }
+    .budget-modal .tab-btn {
+      font-size: 10px;
+      padding: 2px 0;
+    }
+    .budget-modal .tab-btn.active {
+      font-size: 12px;
+    }
+    .budget-modal .modal-form {
+      gap: 8px;
+    }
+    .budget-modal .input-row {
+      gap: 8px;
+    }
+    #budgetSummary {
+      margin-top: 8px !important;
+      font-size: 8px !important;
+    }
+    .budget-modal button[type="submit"], .budget-modal button[type="button"] {
+      /* font-size, padding, and border-radius removed to allow .save-btn to control size */
+    }
+    /* Budget Modal Styles */
+    .budget-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.18);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .budget-modal-overlay.active {
+      display: flex;
+    }
+    .budget-modal {
+      width: 1600px;
+      max-width: 100vw;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
+      padding: 120px 120px 144px 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      position: relative;
+    }
+    .budget-modal .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      font-size: 24px;
+      background: none;
+      border: none;
+      color: #888;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .budget-modal label {
+      font-size: 70px;
+      margin-bottom: 2px;
+      font-family: 'Open Sans', sans-serif;
+    }
+    .budget-modal input[type="number"] {
+      font-size: 70px;
+      padding: 32px 64px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 8px;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: 'Open Sans', sans-serif;
+    }
+    .budget-modal .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .budget-modal .input-row {
+      display: flex;
+      gap: 10px;
+    }
+    .budget-modal .summary {
+      margin-top: 18px;
+      font-size: 70px;
+      text-align: center;
+      font-family: 'Open Sans', sans-serif;
+    }
+    .budget-modal .save-btn {
+      background: #2563eb;
+      color: #fff;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 48px;
+      padding: 20px 60px;
+      border: none;
+      border-radius: 24px;
+      box-shadow: 0 2px 8px 0 rgba(37,99,235,0.12);
+      cursor: pointer;
+      margin: 18px auto 0 auto;
+      display: block;
+      transition: background 0.2s;
+    }
+    .budget-modal .expense-table {
+      width: 100%;
+      margin-top: 18px;
+      border-collapse: collapse;
+      font-size: 60px;
+      font-family: 'Open Sans', sans-serif;
+    }
+    .budget-modal .expense-table th, .budget-modal .expense-table td {
+      border: 1px solid #eee;
+      padding: 36px 64px;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .budget-modal .expense-table th {
+      background: #f1f5f9;
+      color: #222;
+    }
+    .budget-modal .expense-table.exceeded th, .budget-modal .expense-table.exceeded td {
+      background: #ffeaea;
+      color: #d32f2f;
+    }
+    #expense-purpose {
+      font-size: 48px;
+      padding: 20px 60px;
+      border-radius: 24px;
+    }
+    #investmentsModal > div, #investmentsInfoModal > div {
+      padding: 100px 140px !important;
+      max-width: 1400px !important;
+      font-size: 54px !important;
+    }
+    #investmentsModal input, #investmentsModal button, #investmentsModal .risk-btn {
+      font-size: 48px !important;
+      padding: 32px 64px !important;
+    }
+    #investmentResults {
+      font-size: 44px !important;
+    }
+    #investmentsInfoModal > div {
+      overflow-y: auto !important;
+      max-height: 70vh !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Personalized Welcome -->
+  <div id="personalWelcome" class="personal-welcome">
+    <span id="welcomeText"></span>
+    <span id="motivationQuote"></span>
+  </div>
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;display:none;"></canvas>
+  <!-- Add glassmorphism and animated background effects -->
+<style>
+  body {
+    background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    min-height: 100vh;
+    font-family: 'Open Sans', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+    color: #1a237e;
+  }
+  .animated-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+  }
+  #dashboardSidebar {
+    background: rgba(255,255,255,0.25);
+    box-shadow: 0 8px 48px 0 rgba(31,38,135,0.18), 0 0 0 4px rgba(25,118,210,0.10);
+    backdrop-filter: blur(18px) saturate(1.3);
+    border-radius: 48px 48px 48px 48px;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    transition: box-shadow 0.3s, background 0.3s;
+    animation: fadeInSidebar 1.2s cubic-bezier(.4,2,.6,1);
+  }
+  @keyframes fadeInSidebar {
+    from { opacity: 0; transform: translateX(-80px); }
+    to { opacity: 1; transform: none; }
+  }
+  #dashboardSidebar h1, #dashboardSidebar div {
+    text-shadow: 0 2px 12px #fff8, 0 1px 0 #fff;
+  }
+  #dashboardSidebar > div > div, #dashboardSidebar > div > h1 {
+    color: #1976d2;
+  }
+  #dashboardMetrics > div {
+    background: rgba(255,255,255,0.45);
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.13), 0 0 0 4px rgba(25,118,210,0.07);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(12px) saturate(1.2);
+    transition: box-shadow 0.3s, transform 0.2s, background 0.3s;
+    animation: fadeInCard 1.2s cubic-bezier(.4,2,.6,1);
+    animation-delay: 0.2s;
+    will-change: transform, box-shadow;
+  }
+  #dashboardMetrics > div:hover {
+    box-shadow: 0 16px 48px 0 #1976d2aa, 0 0 0 6px #fff3;
+    transform: scale(1.04) translateY(-4px);
+    background: rgba(255,255,255,0.65);
+  }
+  @keyframes fadeInCard {
+    from { opacity: 0; transform: translateY(60px) scale(0.95); }
+    to { opacity: 1; transform: none; }
+  }
+  #dashboardMetrics span[id^='dashboard'] {
+    background: linear-gradient(90deg, #1976d2 30%, #19bee3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-shadow: 0 2px 12px #19bee388;
+    transition: background 0.3s;
+  }
+  #dashboardMetrics > div span[id^='dashboard'] {
+    background: linear-gradient(90deg, #1976d2 30%, #19bee3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #1976d2;
+    text-shadow: 0 2px 12px #19bee388;
+  }
+  #dashboardMetrics > div span:not([id^='dashboard']) {
+    color: #374151;
+  }
+  #dashboardMetrics > div span {
+    font-weight: 700;
+  }
+  .progress-bar-outer {
+    width: 80%;
+    height: 18px;
+    background: #e3f0ff;
+    border-radius: 12px;
+    margin: 18px auto 0 auto;
+    overflow: hidden;
+    box-shadow: 0 2px 8px #1976d222;
+  }
+  .progress-bar-inner {
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #19bee3 0%, #1976d2 100%);
+    transition: width 1s cubic-bezier(.4,2,.6,1);
+  }
+  .main-content {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,0.18);
+    border-radius: 48px;
+    box-shadow: 0 8px 48px 0 rgba(31,38,135,0.10);
+    margin: 32px 32px 32px 0;
+    padding: 48px 0;
+    animation: fadeInMain 1.2s cubic-bezier(.4,2,.6,1);
+  }
+  @keyframes fadeInMain {
+    from { opacity: 0; transform: translateY(80px); }
+    to { opacity: 1; transform: none; }
+  }
+  .main-box {
+    background: rgba(255,255,255,0.45);
+    box-shadow: 0 8px 32px 0 #19bee388, 0 0 0 4px #fff3;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(10px) saturate(1.2);
+    border-radius: 64px;
+    transition: box-shadow 0.3s, transform 0.2s, background 0.3s;
+    animation: fadeInCard 1.2s cubic-bezier(.4,2,.6,1);
+    will-change: transform, box-shadow;
+    color: #1a237e;
+  }
+  .main-box:hover {
+    box-shadow: 0 16px 48px 0 #19bee3aa, 0 0 0 6px #fff3;
+    transform: scale(1.03) translateY(-4px);
+    background: rgba(255,255,255,0.65);
+  }
+  .main-title {
+    background: linear-gradient(90deg, #1976d2 30%, #19bee3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #1976d2;
+    text-shadow: 0 2px 12px #19bee388;
+    font-size: 140px;
+    font-weight: 900;
+    letter-spacing: -2px;
+  }
+  .main-subtitle {
+    color: #19bee3;
+    text-shadow: 0 2px 12px #fff8;
+    font-size: 70px;
+    font-weight: 400;
+  }
+  .save-btn, #aboutToggleBtn {
+    background: linear-gradient(90deg, #19bee3 0%, #1976d2 100%);
+    color: #fff;
+    font-size: 40px;
+    font-weight: 700;
+    border: none;
+    border-radius: 18px;
+    padding: 24px 60px;
+    box-shadow: 0 4px 24px 0 #1976d288;
+    transition: box-shadow 0.3s, transform 0.2s, background 0.3s;
+    cursor: pointer;
+    margin-top: 18px;
+    color: #fff !important;
+    text-shadow: 0 2px 8px #1976d288;
+  }
+  .save-btn:hover, #aboutToggleBtn:hover {
+    box-shadow: 0 8px 32px 0 #19bee3aa;
+    transform: scale(1.04);
+    background: linear-gradient(90deg, #1976d2 0%, #19bee3 100%);
+    color: #fff !important;
+  }
+  .features-section, .budget-modal, .expense-table, .summary, label, input, th, td {
+    color: #1a237e !important;
+  }
+  .invest-card b {
+    color: #1976d2 !important;
+  }
+  .invest-card span {
+    color: #19bee3 !important;
+  }
+  .invest-card .invest-progress-bar {
+    background: linear-gradient(90deg, #19bee3 0%, #1976d2 100%) !important;
+  }
+  .invest-card {
+    color: #1a237e !important;
+  }
+  .summary {
+    color: #f0187b !important;
+    font-weight: bold;
+    text-shadow: 0 2px 8px #fff8;
+  }
+</style>
+<svg class="animated-bg" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="400" cy="200" r="180" fill="#19bee3" fill-opacity="0.18">
+    <animate attributeName="cy" values="200;300;200" dur="8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1600" cy="900" r="220" fill="#1976d2" fill-opacity="0.13">
+    <animate attributeName="cy" values="900;800;900" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  <ellipse cx="1200" cy="300" rx="160" ry="80" fill="#f0187b" fill-opacity="0.10">
+    <animate attributeName="cx" values="1200;1300;1200" dur="12s" repeatCount="indefinite"/>
+  </ellipse>
+</svg>
+<script>
+// Add animated progress bars to dashboard metrics
+function updateDashboardMetrics() {
+  const salary = parseFloat(document.getElementById('salary').value) || 0;
+  const spendingLimit = parseFloat(document.getElementById('spending-limit').value) || 0;
+  const savingGoal = parseFloat(document.getElementById('saving-goal').value) || 0;
+  const totalSpent = expenses.reduce((a, b) => a + b.amount, 0);
+  const remaining = spendingLimit - totalSpent;
+  const progress = salary - totalSpent - savingGoal;
+  document.getElementById('dashboardSalary').textContent = '₹' + salary.toLocaleString();
+  document.getElementById('dashboardSpent').textContent = '₹' + totalSpent.toLocaleString();
+  document.getElementById('dashboardRemaining').textContent = '₹' + remaining.toLocaleString();
+  document.getElementById('dashboardSavings').textContent = '₹' + progress.toLocaleString();
+  // Progress bars
+  const metrics = [
+    { id: 'dashboardSalary', value: salary, max: salary },
+    { id: 'dashboardSpent', value: totalSpent, max: spendingLimit },
+    { id: 'dashboardRemaining', value: remaining, max: spendingLimit },
+    { id: 'dashboardSavings', value: progress, max: salary }
+  ];
+  metrics.forEach(m => {
+    const el = document.getElementById(m.id);
+    let bar = el.parentElement.querySelector('.progress-bar-inner');
+    if (!bar) {
+      // Create progress bar if not exists
+      const outer = document.createElement('div');
+      outer.className = 'progress-bar-outer';
+      bar = document.createElement('div');
+      bar.className = 'progress-bar-inner';
+      outer.appendChild(bar);
+      el.parentElement.appendChild(outer);
+    }
+    let percent = m.max ? Math.max(0, Math.min(100, Math.round((m.value / m.max) * 100))) : 0;
+    if (m.id === 'dashboardRemaining' && m.max === 0) percent = 0;
+    bar.style.width = percent + '%';
+  });
+}
+</script>
+  <!-- Sidebar Dashboard -->
+<div id="dashboardSidebar" style="position:fixed;top:0;left:0;height:100vh;width:800px;background:linear-gradient(135deg,#e3f0ff 60%,#f8fafc 100%);box-shadow:12px 0 64px 0 rgba(31,38,135,0.16);display:flex;flex-direction:column;align-items:center;padding:96px 0 48px 0;z-index:1000;">
+  <div style="width:100%;display:flex;flex-direction:column;align-items:center;">
+    <img src="profile.png" alt="Profile" style="width:200px;height:200px;border-radius:50%;object-fit:cover;border:10px solid #1976d2;box-shadow:0 12px 48px 0 rgba(25,118,210,0.22);background:#fff;margin-bottom:48px;">
+    <h1 style="font-size:72px;font-family:'Open Sans',sans-serif;font-weight:900;margin:0 0 24px 0;color:#1976d2;letter-spacing:-3px;text-align:center;">Budget Dashboard</h1>
+    <div style="font-size:38px;color:#444;font-family:'Open Sans',sans-serif;margin-bottom:64px;text-align:center;">Welcome back!<br>Here's your financial overview.</div>
+      </div>
+  <div id="dashboardMetrics" style="display:flex;flex-direction:column;gap:64px;width:98%;align-items:center;">
+    <div style="background:linear-gradient(135deg,#f8fafc 60%,#b2ebf2 100%);border-radius:48px;box-shadow:0 12px 48px 0 rgba(31,38,135,0.18);padding:72px 0;min-width:500px;text-align:center;display:flex;flex-direction:column;align-items:center;">
+      <span style="font-size:48px;color:#888;font-family:'Open Sans',sans-serif;margin-bottom:18px;">Total Income</span>
+      <span id="dashboardSalary" style="font-size:80px;font-weight:900;color:#1976d2;font-family:'Open Sans',sans-serif;">₹0</span>
+      <span style="font-size:60px;">💰</span>
+    </div>
+    <div style="background:linear-gradient(135deg,#f8fafc 60%,#ffe082 100%);border-radius:48px;box-shadow:0 12px 48px 0 rgba(31,38,135,0.18);padding:72px 0;min-width:500px;text-align:center;display:flex;flex-direction:column;align-items:center;">
+      <span style="font-size:48px;color:#888;font-family:'Open Sans',sans-serif;margin-bottom:18px;">Total Spent</span>
+      <span id="dashboardSpent" style="font-size:80px;font-weight:900;color:#d32f2f;font-family:'Open Sans',sans-serif;">₹0</span>
+      <span style="font-size:60px;">🛒</span>
+    </div>
+    <div style="background:linear-gradient(135deg,#f8fafc 60%,#c5e1a5 100%);border-radius:48px;box-shadow:0 12px 48px 0 rgba(31,38,135,0.18);padding:72px 0;min-width:500px;text-align:center;display:flex;flex-direction:column;align-items:center;">
+      <span style="font-size:48px;color:#888;font-family:'Open Sans',sans-serif;margin-bottom:18px;">Remaining Budget</span>
+      <span id="dashboardRemaining" style="font-size:80px;font-weight:900;color:#388e3c;font-family:'Open Sans',sans-serif;">₹0</span>
+      <span style="font-size:60px;">📊</span>
+    </div>
+    <div style="background:linear-gradient(135deg,#f8fafc 60%,#ffd54f 100%);border-radius:48px;box-shadow:0 12px 48px 0 rgba(31,38,135,0.18);padding:72px 0;min-width:500px;text-align:center;display:flex;flex-direction:column;align-items:center;">
+      <span style="font-size:48px;color:#888;font-family:'Open Sans',sans-serif;margin-bottom:18px;">Savings/Investments</span>
+      <span id="dashboardSavings" style="font-size:80px;font-weight:900;color:#f0187b;font-family:'Open Sans',sans-serif;">₹0</span>
+      <span style="font-size:60px;">📈</span>
+    </div>
+  </div>
+  <!-- Animated Savings Progress Bar -->
+  <div id="savingsProgressBarContainer" class="savings-progress-bar-container">
+    <div class="savings-progress-label">Savings Progress</div>
+    <div class="savings-progress-bar-outer">
+      <div id="savingsProgressBar" class="savings-progress-bar-inner"></div>
+    </div>
+    <div id="savingsProgressText" class="savings-progress-text"></div>
+  </div>
+</div>
+<!-- Shift main content to the right to accommodate expanded sidebar -->
+<style>
+  body { margin-left: 800px !important; }
+  @media (max-width: 900px) {
+    #dashboardSidebar { width: 100vw; position: static; height: auto; border-radius: 0; box-shadow: none; }
+    body { margin-left: 0 !important; }
+  }
+</style>
+<script>
+function updateDashboardMetrics() {
+  const salary = parseFloat(document.getElementById('salary').value) || 0;
+  const spendingLimit = parseFloat(document.getElementById('spending-limit').value) || 0;
+  const savingGoal = parseFloat(document.getElementById('saving-goal').value) || 0;
+  const totalSpent = expenses.reduce((a, b) => a + b.amount, 0);
+  const remaining = spendingLimit - totalSpent;
+  const progress = salary - totalSpent - savingGoal;
+  document.getElementById('dashboardSalary').textContent = '₹' + salary.toLocaleString();
+  document.getElementById('dashboardSpent').textContent = '₹' + totalSpent.toLocaleString();
+  document.getElementById('dashboardRemaining').textContent = '₹' + remaining.toLocaleString();
+  document.getElementById('dashboardSavings').textContent = '₹' + progress.toLocaleString();
+}
+document.getElementById('salary').addEventListener('input', updateDashboardMetrics);
+document.getElementById('spending-limit').addEventListener('input', updateDashboardMetrics);
+document.getElementById('saving-goal').addEventListener('input', updateDashboardMetrics);
+// Also call after adding/removing expenses
+// Call updateDashboardMetrics() in addExpense, saveExpenses, and wherever expenses change
+</script>
+  <!-- Removed SVG background -->
+  <div class="desktop5-wrapper">
+    <!-- Sidebar removed as per user request -->
+    <div class="main-content animated-entrance" style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 60px; flex-wrap: wrap; min-height: 100vh;">
+      <div style="flex: 1 1 0; min-width: 600px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 60px;">
+      <div class="main-box animated-card" tabindex="0" role="button" aria-label="Budget" onclick="document.getElementById('budgetModal').classList.add('active')">
+          <div class="main-title">Budget</div>
+        <div class="main-subtitle" style="color:#000 !important;">see where your money goes</div>
+      </div>
+        <div class="main-box animated-card" tabindex="0" role="button" aria-label="Savings and Investments" id="savingsInvestmentsBox">
+        <div class="main-title">Savings<br>and<br>Investments</div>
+        <div class="main-subtitle" style="color:#000 !important;">helps you balance financial security</div>
+      </div>
+      <div class="main-box animated-card" tabindex="0" role="button" aria-label="Graphs" onclick="alert('Graphs clicked!')">
+        <div class="main-title">Graphs</div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 0; min-width: 400px;">
+        <button id="aboutToggleBtn" class="animated-btn" style="width:100%;margin-bottom:24px;font-size:36px;padding:18px 0;border-radius:18px;border:none;background:#2563eb;color:#fff;cursor:pointer;">About</button>
+        <div class="features-section" id="featuresSection" style="width:700px;max-width:100vw;background:#f8fafc;border-radius:32px;padding:48px 40px 32px 40px;box-shadow:0 4px 32px 0 rgba(31,38,135,0.07);font-size:28px;display:none;">
+          <h2 style="font-size:38px;margin-bottom:24px;">Budget Made Easy</h2>
+          <p>Set your monthly spending limits and get daily updates to stay on track.</p>
+          <h2 style="font-size:38px;margin:40px 0 24px 0;">Daily Alerts</h2>
+          <p>Receive instant notifications when you go over budget—so you can adjust before it's too late.</p>
+          <h2 style="font-size:38px;margin:40px 0 24px 0;">Smart Savings</h2>
+          <p>Automatically track what you've saved every day and watch your progress grow.</p>
+          <h2 style="font-size:38px;margin:40px 0 24px 0;">Investment Goals</h2>
+          <p>Set targets for investing your surplus income and build a secure financial future.</p>
+          <h2 style="font-size:34px;margin:48px 0 24px 0;">📈 How It Works</h2>
+          <ol style="margin-left:30px;">
+            <li><b>Add Your Income:</b> Enter your total salary to create your monthly budget.</li>
+            <li><b>Set Your Spending Limit:</b> Decide how much you want to spend and how much you want to save.</li>
+            <li><b>Record Your Expenses:</b> Log daily expenses with just a few clicks.</li>
+            <li><b>Stay Informed:</b> Get daily alerts showing if you're In Budget or Out of Budget.</li>
+            <li><b>Grow Your Wealth:</b> Track savings over time and plan your investments confidently.</li>
+          </ol>
+          <h2 style="font-size:34px;margin:48px 0 24px 0;">🔔 Daily Alert Messages</h2>
+          <p><b>✅ In Budget:</b> Great job! You've spent ₹1,500 today. You are within your daily limit.</p>
+          <p><b>⚠️ Out of Budget:</b> Alert! You have exceeded your spending limit. Review your expenses to get back on track.</p>
+          <h2 style="font-size:34px;margin:48px 0 24px 0;">🏆 Benefits</h2>
+          <ul style="margin-left:30px;">
+            <li>See where your money goes.</li>
+            <li>Avoid overspending with smart alerts.</li>
+            <li>Build a habit of saving every day.</li>
+            <li>Invest what you save for long-term growth.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="budget-modal-overlay" id="budgetModal">
+    <div class="budget-modal animated-modal">
+      <button class="close-btn" onclick="document.getElementById('budgetModal').classList.remove('active')" style="font-size:120px; top:24px; right:48px; color:#f0187b; text-shadow:0 4px 24px #fff, 0 2px 8px #f0187b44; background:none; border:none; cursor:pointer; position:absolute; z-index:10;">&times;</button>
+      <form class="modal-form" id="budgetForm" oninput="updateBudgetSummary()">
+        <label for="salary" class="modal-label">Monthly Salary</label>
+        <div class="input-icon-group">
+          <span class="input-icon">₹</span>
+          <input type="number" id="salary" name="salary" placeholder="e.g. 50000" min="0" required />
+        </div>
+        <div class="input-row">
+          <div style="flex:1;">
+            <label for="spending-limit" class="modal-label">Spending Limit</label>
+            <div class="input-icon-group">
+              <span class="input-icon">🛒</span>
+              <input type="number" id="spending-limit" name="spending-limit" placeholder="e.g. 35000" min="0" required />
+            </div>
+          </div>
+          <div style="flex:1;">
+            <label for="saving-goal" class="modal-label">Savings & Investments</label>
+            <div class="input-icon-group">
+              <span class="input-icon">🏦</span>
+              <input type="number" id="saving-goal" name="saving-goal" placeholder="e.g. 15000" min="0" required />
+            </div>
+          </div>
+        </div>
+        <label for="expense-purpose" class="modal-label">Purpose</label>
+        <div class="input-icon-group">
+          <span class="input-icon">📝</span>
+          <input type="text" id="expense-purpose" name="expense-purpose" placeholder="e.g. groceries, shopping, bills" maxlength="32" />
+        </div>
+        <label for="expense" class="modal-label">Add Expense</label>
+        <div class="input-icon-group">
+          <span class="input-icon">₹</span>
+          <input type="number" id="expense" name="expense" placeholder="e.g. 1200 (groceries)" min="0" />
+        </div>
+        <button type="button" class="save-btn" onclick="addExpense()">Add Expense</button>
+        <button type="button" class="save-btn" onclick="saveExpenses()" style="margin-left: 12px;">Save</button>
+      </form>
+      <div class="summary" id="budgetSummary"></div>
+      <table class="expense-table" id="expenseTable">
+        <thead>
+          <tr><th>Amount</th><th>Purpose</th><th>Time</th><th>Day</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div id="modalCheckmark" class="modal-checkmark" style="display:none;"></div>
+    </div>
+  </div>
+  <div id="investmentsModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:2000;justify-content:center;align-items:center;">
+    <div style="background:#fff;border-radius:64px;box-shadow:0 16px 64px 0 rgba(31,38,135,0.18);padding:120px 180px;max-width:2000px;max-height:98vh;display:flex;flex-direction:column;align-items:center;position:relative;">
+      <button id="closeInvestmentsModal" style="position:absolute;top:24px;right:48px;font-size:120px;background:none;border:none;color:#f0187b;text-shadow:0 4px 24px #fff,0 2px 8px #f0187b44;cursor:pointer;z-index:10;">&times;</button>
+      <h2 style="font-size:90px;margin-bottom:48px;">Investments Section</h2>
+      <div style="font-size:60px;margin-bottom:60px;">Enter your monthly savings and select your risk profile to get personalized investment suggestions.</div>
+      <input id="monthlySavingsInput" type="number" min="0" placeholder="Enter monthly savings (₹)" style="font-size:54px;padding:24px 48px;border-radius:24px;border:2px solid #bbb;margin-bottom:48px;width:600px;max-width:90vw;" />
+      <div style="font-size:48px;margin-bottom:24px;">Select Risk Profile:</div>
+      <div id="riskProfileBtns" style="display:flex;gap:36px;margin-bottom:48px;">
+        <button class="risk-btn" data-risk="conservative" style="font-size:40px;padding:18px 48px;border-radius:18px;border:2px solid #2563eb;background:#f8fafc;color:#2563eb;cursor:pointer;">Conservative</button>
+        <button class="risk-btn" data-risk="balanced" style="font-size:40px;padding:18px 48px;border-radius:18px;border:2px solid #2563eb;background:#2563eb;color:#fff;cursor:pointer;">Balanced</button>
+        <button class="risk-btn" data-risk="aggressive" style="font-size:40px;padding:18px 48px;border-radius:18px;border:2px solid #2563eb;background:#f8fafc;color:#2563eb;cursor:pointer;">Aggressive</button>
+      </div>
+      <button id="suggestInvestmentsBtn" style="font-size:48px;padding:28px 80px;border-radius:24px;border:none;background:#19bee3;color:#fff;cursor:pointer;margin-bottom:36px;">Suggest Investments</button>
+      <button id="learnInvestmentsBtn" style="font-size:40px;padding:18px 60px;border-radius:18px;border:none;background:#f0187b;color:#fff;cursor:pointer;margin-bottom:48px;">Learn About Investments</button>
+      <div id="investmentResults" style="width:100%;max-width:1200px;"></div>
+    </div>
+  </div>
+  <div id="investmentsInfoModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:3000;justify-content:center;align-items:center;">
+    <div style="background:#fff;border-radius:64px;box-shadow:0 16px 64px 0 rgba(31,38,135,0.18);padding:120px 180px;max-width:2000px;max-height:98vh;display:flex;flex-direction:column;align-items:center;position:relative;">
+      <button id="closeInvestmentsInfoModal" style="position:absolute;top:24px;right:48px;font-size:120px;background:none;border:none;color:#f0187b;text-shadow:0 4px 24px #fff,0 2px 8px #f0187b44;cursor:pointer;z-index:10;">&times;</button>
+      <h2 style="font-size:90px;margin-bottom:48px;">About Investment Options</h2>
+      <ul style="font-size:54px;line-height:1.7;max-width:1400px;">
+        <li><b>Fixed Deposits:</b> A safe way to earn interest by locking your money in a bank for a set period. Low risk, guaranteed returns.<br><span style='color:#2563eb;font-size:40px;'>How to invest: Visit your bank or use their online portal/mobile app to open a Fixed Deposit account.</span></li>
+        <li><b>Government Bonds:</b> Loans you give to the government in exchange for regular interest payments. Very safe, but returns are moderate.<br><span style='color:#2563eb;font-size:40px;'>How to invest: Buy bonds through your bank, post office, or government investment platforms like RBI Retail Direct.</span></li>
+        <li><b>Mutual Funds:</b> Pools your money with others to invest in stocks, bonds, or other assets, managed by professionals. Good for diversification.<br><span style='color:#2563eb;font-size:40px;'>How to invest: Use mutual fund apps, your bank, or online investment platforms (like Groww, Zerodha, or Paytm Money).</span></li>
+        <li><b>Gold ETFs:</b> Lets you invest in gold without holding it physically. Good for hedging against inflation and diversifying your portfolio.<br><span style='color:#2563eb;font-size:40px;'>How to invest: Buy Gold ETFs through your trading account or investment app.</span></li>
+        <li><b>Stocks:</b> Buying shares of companies. Higher risk, but potential for higher returns over time.<br><span style='color:#2563eb;font-size:40px;'>How to invest: Open a Demat and trading account with a broker (like Zerodha, Upstox, or your bank) and buy stocks online.</span></li>
+        <li><b>Index Funds:</b> A type of mutual fund or ETF that tracks a market index. Low cost, good for passive long-term growth.<br><span style='color:#2563eb;font-size:40px;'>How to invest: Invest via mutual fund platforms, your bank, or investment apps by searching for index funds.</span></li>
+      </ul>
+    </div>
+  </div>
+  <div id="investmentFullPage" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(30,40,80,0.96);z-index:4000;justify-content:center;align-items:center;animation:fadeInInvest 0.5s;">
+    <div style="background:#fff;border-radius:48px;box-shadow:0 8px 48px 0 rgba(31,38,135,0.18);padding:100px 120px;max-width:1200px;max-height:90vh;display:flex;flex-direction:column;align-items:center;position:relative;overflow:auto;">
+      <button id="closeInvestmentFullPage" style="position:absolute;top:40px;right:60px;font-size:64px;background:none;border:none;color:#888;cursor:pointer;">&times;</button>
+      <div id="investmentFullPageContent"></div>
+    </div>
+  </div>
+  <div id="graphsModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(30,40,80,0.96);z-index:5000;justify-content:center;align-items:center;animation:fadeInInvest 0.5s;">
+    <div style="background:rgba(255,255,255,0.25);backdrop-filter:blur(18px) saturate(1.3);border-radius:64px;box-shadow:0 16px 64px 0 #1976d2aa;padding:100px 120px;max-width:1800px;max-height:95vh;display:flex;flex-direction:column;align-items:center;position:relative;overflow:auto;">
+      <button id="closeGraphsModal" style="position:absolute;top:40px;right:60px;font-size:120px;background:none;border:none;color:#f0187b;text-shadow:0 4px 24px #fff,0 2px 8px #f0187b44;cursor:pointer;z-index:10;">&times;</button>
+      <button type="button" class="save-btn" onclick="saveGraphData()" style="position:absolute;top:40px;right:220px;font-size:48px;padding:24px 60px;border-radius:24px;border:none;background:#2563eb;color:#fff;cursor:pointer;">Save</button>
+      <h2 style="font-size:90px;color:#1976d2;margin-bottom:60px;text-shadow:0 4px 24px #fff,0 2px 8px #1976d288;">Daily Savings Graph</h2>
+      <canvas id="savingsChart" width="1500" height="600" style="background:linear-gradient(120deg,#e3f0ff 0%,#f8fafc 100%);border-radius:48px;box-shadow:0 8px 48px 0 #19bee388;"></canvas>
+    </div>
+  </div>
+  <style>
+    @keyframes fadeInInvest {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .invest-card {
+      background: #f8fafc;
+      border-radius: 48px;
+      box-shadow: 0 8px 48px 0 rgba(31,38,135,0.13);
+      padding: 100px 180px 80px 180px;
+      margin-bottom: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 1200px;
+      max-width: 1600px;
+      animation: fadeInInvest 0.7s;
+    }
+    .invest-icon {
+      font-size: 140px;
+      margin-bottom: 40px;
+    }
+    .invest-progress {
+      width: 100%;
+      height: 60px;
+      background: #e0e7ef;
+      border-radius: 32px;
+      margin: 48px 0 0 0;
+      overflow: hidden;
+    }
+    .invest-progress-bar {
+      height: 100%;
+      border-radius: 32px;
+      background: linear-gradient(90deg, #19bee3 0%, #1976d2 100%);
+      transition: width 1s cubic-bezier(.4,2,.6,1);
+    }
+    .invest-card b {
+      font-size: 96px !important;
+    }
+    .invest-card span, .invest-card .invest-progress-bar {
+      font-size: 72px !important;
+    }
+    .invest-card {
+      min-width: 480px;
+      max-width: 700px;
+      padding: 48px 40px 36px 40px;
+    }
+    .invest-icon {
+      font-size: 72px;
+      margin-bottom: 24px;
+    }
+    .invest-progress {
+      height: 28px;
+      border-radius: 16px;
+      margin: 18px 0 0 0;
+    }
+    .invest-card b {
+      font-size: 44px !important;
+    }
+    .invest-card span, .invest-card .invest-progress-bar {
+      font-size: 28px !important;
+    }
+    @media (max-width: 1600px) {
+      .invest-card { min-width: 340px; max-width: 480px; padding: 32px 16px 24px 16px; }
+      .invest-icon { font-size: 48px; }
+      .invest-card b { font-size: 28px !important; }
+      .invest-card span, .invest-card .invest-progress-bar { font-size: 18px !important; }
+      .invest-progress { height: 16px; }
+    }
+    #investmentFullPage > div { max-width: 100vw !important; }
+    #investmentFullPageContent {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      flex-wrap: nowrap !important;
+      gap: 40px !important;
+      margin: 60px 0 60px 0 !important;
+      width: 100%;
+    }
+    .invest-card {
+      margin: 0 !important;
+    }
+    .invest-card {
+      min-width: 700px;
+      max-width: 1200px;
+      padding: 80px 100px 60px 100px;
+      border-radius: 56px;
+      box-shadow: 0 12px 64px 0 rgba(31,38,135,0.18);
+      margin-bottom: 0;
+      margin-top: 0;
+      font-size: 60px;
+      background: linear-gradient(135deg, #f8fafc 60%, #e0f7fa 100%);
+      position: relative;
+    }
+    .invest-icon {
+      font-size: 120px;
+      margin-bottom: 32px;
+    }
+    .invest-progress {
+      height: 40px;
+      border-radius: 24px;
+      margin: 32px 0 0 0;
+    }
+    .invest-card b {
+      font-size: 80px !important;
+    }
+    .invest-card span, .invest-card .invest-progress-bar {
+      font-size: 48px !important;
+    }
+    /* Accent color for each card */
+    .invest-card.accent-0 { background: linear-gradient(135deg, #f8fafc 60%, #b2ebf2 100%); }
+    .invest-card.accent-1 { background: linear-gradient(135deg, #f8fafc 60%, #ffe082 100%); }
+    .invest-card.accent-2 { background: linear-gradient(135deg, #f8fafc 60%, #c5e1a5 100%); }
+    .invest-card.accent-3 { background: linear-gradient(135deg, #f8fafc 60%, #ffab91 100%); }
+    .invest-card.accent-4 { background: linear-gradient(135deg, #f8fafc 60%, #b39ddb 100%); }
+    .invest-card.accent-5 { background: linear-gradient(135deg, #f8fafc 60%, #ffd54f 100%); }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Parallax effect for background images
+    function parallaxScroll() {
+      var scrolled = window.scrollY;
+      document.querySelectorAll('.parallax-bg').forEach(function(bg) {
+        bg.style.backgroundPosition = 'center ' + (scrolled * 0.3) + 'px';
+      });
+    }
+    window.addEventListener('scroll', parallaxScroll);
+    // Initial call
+    parallaxScroll();
+    // Budget modal logic
+    let expenses = [];
+    function addExpense() {
+      const expenseInput = document.getElementById('expense');
+      const purposeInput = document.getElementById('expense-purpose');
+      const value = parseFloat(expenseInput.value);
+      const purpose = purposeInput.value.trim() || '-';
+      if (!isNaN(value) && value > 0) {
+        const now = new Date();
+        expenses.push({ amount: value, purpose, time: now.toLocaleTimeString(), day: now.toLocaleDateString() });
+        expenseInput.value = '';
+        purposeInput.value = '';
+        updateBudgetSummary();
+        updateExpenseTable();
+        updateDashboardMetrics(); // Update dashboard metrics after adding expense
+        showModalCheckmark();
+      }
+    }
+    function saveExpenses() {
+      const salary = parseFloat(document.getElementById('salary').value) || 0;
+      const spendingLimit = parseFloat(document.getElementById('spending-limit').value) || 0;
+      const savingGoal = parseFloat(document.getElementById('saving-goal').value) || 0;
+      const totalSpent = expenses.reduce((a, b) => a + b.amount, 0);
+      const remaining = spendingLimit - totalSpent;
+      const progress = salary - totalSpent - savingGoal;
+      let summary = '';
+      if (!salary || !spendingLimit) {
+        summary = '<span style="color:#888;">Enter your salary and spending limit to see your budget summary.</span>';
+      } else if (totalSpent <= spendingLimit) {
+        summary = `<div style='color:green;font-size:40px;font-weight:bold;line-height:1.3;margin-bottom:12px;'>✅ You are within your budget today!</div><div style='font-size:32px;font-weight:bold;color:#222;margin-bottom:8px;'>Good job! You've spent ₹${totalSpent.toLocaleString()} so far. ₹${remaining.toLocaleString()} left to stay within your budget.</div><div style='font-size:32px;font-weight:bold;color:#1976d2;'>Progress toward saving/investing goal: <b>₹${progress.toLocaleString()}</b></div>`;
+      } else {
+        summary = `<span style='color:#d32f2f;'>⚠️ You are out of budget! Reduce spending to reach your saving goal.</span><br>Alert: You've spent ₹${totalSpent.toLocaleString()}, which is ₹${(totalSpent-spendingLimit).toLocaleString()} over your limit. Try to cut back to meet your saving goal.<br>Progress toward saving/investing goal: <b>₹${progress.toLocaleString()}</b>`;
+      }
+      document.getElementById('budgetSummary').innerHTML = summary;
+      updateExpenseTable();
+      updateDashboardMetrics(); // Update dashboard metrics after saving expenses
+      alert('Expenses saved!');
+      // Optionally, you could save expenses to localStorage or send to a server here
+    }
+    function updateBudgetSummary() {
+      const salary = parseFloat(document.getElementById('salary').value) || 0;
+      const spendingLimit = parseFloat(document.getElementById('spending-limit').value) || 0;
+      const savingGoal = parseFloat(document.getElementById('saving-goal').value) || 0;
+      const totalSpent = expenses.reduce((a, b) => a + b.amount, 0);
+      const remaining = spendingLimit - totalSpent;
+      const progress = salary - totalSpent - savingGoal;
+      let summary = '';
+      if (!salary || !spendingLimit) {
+        summary = '<span style="color:#888;">Enter your salary and spending limit to see your budget summary.</span>';
+      } else if (totalSpent <= spendingLimit) {
+        summary = `<div style='color:green;font-size:40px;font-weight:bold;line-height:1.3;margin-bottom:12px;'>✅ You are within your budget today!</div><div style='font-size:32px;font-weight:bold;color:#222;margin-bottom:8px;'>Good job! You've spent ₹${totalSpent.toLocaleString()} so far. ₹${remaining.toLocaleString()} left to stay within your budget.</div><div style='font-size:32px;font-weight:bold;color:#1976d2;'>Progress toward saving/investing goal: <b>₹${progress.toLocaleString()}</b></div>`;
+      } else {
+        summary = `<span style='color:#d32f2f;'>⚠️ You are out of budget! Reduce spending to reach your saving goal.</span><br>Alert: You've spent ₹${totalSpent.toLocaleString()}, which is ₹${(totalSpent-spendingLimit).toLocaleString()} over your limit. Try to cut back to meet your saving goal.<br>Progress toward saving/investing goal: <b>₹${progress.toLocaleString()}</b>`;
+      }
+      document.getElementById('budgetSummary').innerHTML = summary;
+      updateExpenseTable();
+      updateDashboardMetrics(); // Update dashboard metrics after updating budget summary
+    }
+    function updateExpenseTable() {
+      const spendingLimit = parseFloat(document.getElementById('spending-limit').value) || 0;
+      const totalSpent = expenses.reduce((a, b) => a + b.amount, 0);
+      const tbody = document.querySelector('#expenseTable tbody');
+      tbody.innerHTML = '';
+      expenses.forEach(e => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>₹${e.amount.toLocaleString()}</td><td>${e.purpose}</td><td>${e.time}</td><td>${e.day}</td>`;
+        tbody.appendChild(tr);
+      });
+      const table = document.getElementById('expenseTable');
+      if (totalSpent > spendingLimit && spendingLimit > 0) {
+        table.classList.add('exceeded');
+      } else {
+        table.classList.remove('exceeded');
+      }
+      updateDashboardMetrics(); // Update dashboard metrics after updating expense table
+    }
+    // Reset expenses when modal closes
+    document.getElementById('budgetModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.remove('active');
+        expenses = [];
+        updateBudgetSummary();
+        updateExpenseTable();
+        document.getElementById('budgetForm').reset();
+        updateDashboardMetrics(); // Update dashboard metrics after resetting budget
+      }
+    });
+    // Profile image upload logic (removed as sidebar/profile image is gone)
+    // const profileImgDiv = document.getElementById('profileImg');
+    // const profileImgInput = document.getElementById('profileImgInput');
+    // const profileLabel = document.getElementById('profileLabel');
+    // const savedImg = localStorage.getItem('profileImgData');
+    // if (savedImg) {
+    //   profileImgDiv.style.backgroundImage = `url('${savedImg}')`;
+    // }
+    // profileLabel.onclick = function() {
+    //   profileImgInput.click();
+    // };
+    // profileImgInput.onchange = function(e) {
+    //   const file = e.target.files[0];
+    //   if (!file) return;
+    //   const reader = new FileReader();
+    //   reader.onload = function(evt) {
+    //     profileImgDiv.style.backgroundImage = `url('${evt.target.result}')`;
+    //     localStorage.setItem('profileImgData', evt.target.result);
+    //   };
+    //   reader.readAsDataURL(file);
+    // };
+    // const removeProfileImgBtn = document.getElementById('removeProfileImgBtn');
+    // removeProfileImgBtn.onclick = function() {
+    //   profileImgDiv.style.backgroundImage = '';
+    //   localStorage.removeItem('profileImgData');
+    // };
+
+    // About/Features section toggle
+    const aboutToggleBtn = document.getElementById('aboutToggleBtn');
+    const featuresSection = document.getElementById('featuresSection');
+    aboutToggleBtn.onclick = function() {
+      if (featuresSection.style.display === 'none' || featuresSection.style.display === '') {
+        featuresSection.style.display = 'block';
+      } else {
+        featuresSection.style.display = 'none';
+      }
+    };
+    // Investments modal logic (advanced)
+    const savingsInvestmentsBox = document.getElementById('savingsInvestmentsBox');
+    const investmentsModal = document.getElementById('investmentsModal');
+    const closeInvestmentsModal = document.getElementById('closeInvestmentsModal');
+    const monthlySavingsInput = document.getElementById('monthlySavingsInput');
+    const riskProfileBtns = document.querySelectorAll('.risk-btn');
+    const suggestInvestmentsBtn = document.getElementById('suggestInvestmentsBtn');
+    const investmentResults = document.getElementById('investmentResults');
+    let selectedRisk = 'balanced';
+    riskProfileBtns.forEach(btn => {
+      btn.onclick = function() {
+        riskProfileBtns.forEach(b => b.style.background = b.dataset.risk === this.dataset.risk ? '#2563eb' : '#f8fafc');
+        riskProfileBtns.forEach(b => b.style.color = b.dataset.risk === this.dataset.risk ? '#fff' : '#2563eb');
+        selectedRisk = this.dataset.risk;
+      };
+    });
+    savingsInvestmentsBox.onclick = function() {
+      investmentsModal.style.display = 'flex';
+    };
+    closeInvestmentsModal.onclick = function() {
+      investmentsModal.style.display = 'none';
+      investmentResults.innerHTML = '';
+      monthlySavingsInput.value = '';
+      selectedRisk = 'balanced';
+      riskProfileBtns.forEach(b => b.style.background = b.dataset.risk === 'balanced' ? '#2563eb' : '#f8fafc');
+      riskProfileBtns.forEach(b => b.style.color = b.dataset.risk === 'balanced' ? '#fff' : '#2563eb');
+    };
+    // Investment full-page overlay logic
+    const investmentFullPage = document.getElementById('investmentFullPage');
+    const investmentFullPageContent = document.getElementById('investmentFullPageContent');
+    const closeInvestmentFullPage = document.getElementById('closeInvestmentFullPage');
+    closeInvestmentFullPage.onclick = function() {
+      investmentFullPage.style.display = 'none';
+      investmentsModal.style.display = 'flex';
+    };
+    suggestInvestmentsBtn.onclick = function() {
+      const savings = parseFloat(monthlySavingsInput.value);
+      if (isNaN(savings) || savings <= 0) {
+        investmentResults.innerHTML = '<div style="color:#d32f2f;font-size:28px;">Please enter a valid monthly savings amount.</div>';
+        return;
+      }
+      let plan, summary;
+      // Add expected annual returns for each type
+      const returns = {
+        'Fixed Deposits': 6,
+        'Government Bonds': 7,
+        'Mutual Funds': 10,
+        'Gold ETFs': 8,
+        'Stocks': 14,
+        'Index Funds': 12
+      };
+      let icons = {
+        'Fixed Deposits': '💰',
+        'Government Bonds': '🏦',
+        'Mutual Funds': '📊',
+        'Gold ETFs': '🥇',
+        'Stocks': '📈',
+        'Index Funds': '📉'
+      };
+      if (selectedRisk === 'conservative') {
+        plan = [
+          { name: 'Fixed Deposits', percent: 40, desc: 'Low risk, steady returns.' },
+          { name: 'Government Bonds', percent: 30, desc: 'Very safe, government-backed.' },
+          { name: 'Mutual Funds', percent: 20, desc: 'Diversified, managed by professionals.' },
+          { name: 'Gold ETFs', percent: 10, desc: 'Hedge against inflation.' }
+        ];
+        summary = 'This plan focuses on safety and steady growth, ideal for risk-averse savers.';
+      } else if (selectedRisk === 'balanced') {
+        plan = [
+          { name: 'Mutual Funds', percent: 35, desc: 'Balanced growth and risk.' },
+          { name: 'Stocks', percent: 25, desc: 'Higher growth, moderate risk.' },
+          { name: 'Fixed Deposits', percent: 20, desc: 'Safe, steady returns.' },
+          { name: 'Government Bonds', percent: 10, desc: 'Safe, long-term.' },
+          { name: 'Gold ETFs', percent: 10, desc: 'Diversification and inflation hedge.' }
+        ];
+        summary = 'This plan balances growth and safety, suitable for most savers.';
+      } else {
+        plan = [
+          { name: 'Stocks', percent: 45, desc: 'High growth, higher risk.' },
+          { name: 'Mutual Funds', percent: 30, desc: 'Diversified, some risk.' },
+          { name: 'Gold ETFs', percent: 15, desc: 'Diversification and inflation hedge.' },
+          { name: 'Index Funds', percent: 10, desc: 'Passive, market-tracking growth.' }
+        ];
+        summary = 'This plan aims for high growth, best for those comfortable with risk.';
+      }
+      let html = '<div style="font-size:90px;font-weight:bold;margin-bottom:38px;color:#1a237e;text-shadow:0 4px 24px #19bee388;">Suggested Investment Plan</div>';
+      html += `<div style='font-size:60px;color:#008080;margin-bottom:38px;'>${summary}</div>`;
+      let totalProfit = 0, totalAmount = 0, weightedReturn = 0, totalMonthlyProfit = 0;
+      plan.forEach((item, idx) => {
+        const amount = Math.round(savings * item.percent / 100);
+        const rate = returns[item.name] || 0;
+        const profit = Math.round(amount * rate / 100);
+        const monthlyProfit = Math.round(profit / 12);
+        totalProfit += profit;
+        totalMonthlyProfit += monthlyProfit;
+        totalAmount += amount;
+        weightedReturn += (amount * rate);
+        html += `<div class='invest-card accent-${idx % 6}' style='animation-delay:${idx * 0.15}s;'>`;
+        html += `<div class='invest-icon'>${icons[item.name] || '💡'}</div>`;
+        html += `<b style='color:#1976d2;font-size:72px;'>${item.name}</b> <span style='color:#008080;font-size:60px;'>₹${amount.toLocaleString()}</span> <span style='color:#888;font-size:48px;'>( ${item.percent}% )</span><br>`;
+        html += `<span style='font-size:48px;color:#374151;'>${item.desc}</span><br>`;
+        html += `<span style='color:#008080;font-size:48px;'>Expected Return: <b>${rate}%</b> | Profit: <b>₹${monthlyProfit.toLocaleString()}</b> / month, <b>₹${profit.toLocaleString()}</b> / year</span>`;
+        html += `<div class='invest-progress'><div class='invest-progress-bar' style='width:${item.percent}%;'></div></div>`;
+        html += `</div>`;
+      });
+      const avgReturn = totalAmount ? (weightedReturn / totalAmount).toFixed(2) : 0;
+      html += `<div style='font-size:68px;font-weight:bold;margin-top:48px;color:#1a237e;'>Total Expected Profit: <span style='color:#008080;'>₹${totalMonthlyProfit.toLocaleString()}</span> / month, <span style='color:#008080;'>₹${totalProfit.toLocaleString()}</span> / year</div>`;
+      html += `<div style='font-size:54px;color:#1976d2;'>Average Return: ${avgReturn}% per year</div>`;
+      html += '<div style="font-size:48px;color:#374151;margin-top:36px;">(This is a sample plan. Please consult a financial advisor for personalized advice.)</div>';
+      investmentFullPageContent.innerHTML = html;
+      // Remove the toggle layout button and logic
+      const toggleLayoutBtnElem = document.getElementById('toggleLayoutBtn');
+      if (toggleLayoutBtnElem) toggleLayoutBtnElem.remove();
+      investmentFullPageContent.style.display = 'flex';
+      investmentFullPageContent.style.flexDirection = 'row';
+      investmentFullPageContent.style.alignItems = 'flex-start';
+      investmentFullPageContent.style.justifyContent = 'center';
+      investmentFullPageContent.style.flexWrap = 'wrap';
+      investmentFullPageContent.style.gap = '48px';
+      investmentFullPage.style.display = 'flex';
+    };
+    // Learn About Investments modal logic
+    const learnInvestmentsBtn = document.getElementById('learnInvestmentsBtn');
+    const investmentsInfoModal = document.getElementById('investmentsInfoModal');
+    const closeInvestmentsInfoModal = document.getElementById('closeInvestmentsInfoModal');
+    learnInvestmentsBtn.onclick = function() {
+      investmentsInfoModal.style.display = 'flex';
+    };
+    closeInvestmentsInfoModal.onclick = function() {
+      investmentsInfoModal.style.display = 'none';
+    };
+    // Graphs modal logic
+    const graphsModal = document.getElementById('graphsModal');
+    const closeGraphsModal = document.getElementById('closeGraphsModal');
+    const graphsBtn = document.querySelector("[aria-label='Graphs']");
+    let savingsChartInstance = null;
+    function getDailySavingsData() {
+      const salary = parseFloat(document.getElementById('salary').value) || 0;
+      // Group expenses by day
+      const expensesByDay = {};
+      expenses.forEach(e => {
+        if (!expensesByDay[e.day]) expensesByDay[e.day] = 0;
+        expensesByDay[e.day] += e.amount;
+      });
+      // Prepare labels and data arrays
+      const labels = Object.keys(expensesByDay);
+      const data = labels.map(day => salary - expensesByDay[day]);
+      return { labels, data };
+    }
+
+    // Overwrite updateSavingsChart for a beautiful line graph with dots and dark font colors everywhere
+    function updateSavingsChart() {
+      const { labels, data } = getDailySavingsData();
+      if (window.savingsChartInstance) {
+        window.savingsChartInstance.data.labels = labels;
+        window.savingsChartInstance.data.datasets[0].data = data;
+        window.savingsChartInstance.update();
+      } else {
+        const ctx = document.getElementById('savingsChart').getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 600);
+        gradient.addColorStop(0, '#19bee3');
+        gradient.addColorStop(1, '#1976d2');
+        window.savingsChartInstance = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Daily Savings',
+              data: data,
+              borderColor: gradient,
+              borderWidth: 8,
+              pointRadius: 14,
+              pointBackgroundColor: '#1976d2',
+              pointBorderColor: '#fff',
+              pointBorderWidth: 6,
+              fill: false,
+              tension: 0.3
+            }]
+          },
+          options: {
+            responsive: false,
+            plugins: {
+              legend: { display: true, labels: { font: { size: 54 }, color: '#222' } },
+              title: { display: false, color: '#1a237e', font: { size: 60, weight: 'bold' } },
+              tooltip: { enabled: true, titleColor: '#222', bodyColor: '#222', footerColor: '#222', backgroundColor: '#fff', borderColor: '#1976d2', borderWidth: 2 }
+            },
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: { font: { size: 54, weight: 'bold' }, color: '#222' },
+                title: { display: true, text: 'Day', font: { size: 60, weight: 'bold' }, color: '#1a237e' }
+              },
+              y: {
+                beginAtZero: true,
+                grid: { color: '#e0e7ef' },
+                ticks: { font: { size: 54, weight: 'bold' }, color: '#222' },
+                title: { display: true, text: 'Savings (₹)', font: { size: 60, weight: 'bold' }, color: '#1a237e' }
+              }
+            }
+          }
+        });
+      }
+    }
+
+    // Call updateSavingsChart() whenever you open the graph modal:
+    graphsBtn.onclick = function() {
+      graphsModal.style.display = 'flex';
+      updateSavingsChart();
+    };
+    closeGraphsModal.onclick = function() {
+      graphsModal.style.display = 'none';
+    };
+    function saveGraphData() {
+      // Example: Save chart data to localStorage or trigger a download
+      alert('Graph data saved!');
+      // You can extend this to actually save the chart data as needed
+    }
+
+    // Initial call to update dashboard metrics on page load
+    updateDashboardMetrics();
+
+    // Floating label logic for modal
+    document.querySelectorAll('.floating-label-group input').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentNode.classList.add('focused');
+      });
+      input.addEventListener('blur', function() {
+        if (!this.value) this.parentNode.classList.remove('focused');
+      });
+      if (input.value) input.parentNode.classList.add('focused');
+    });
+    // Animated checkmark on add/save expense
+    function showModalCheckmark() {
+      const mark = document.getElementById('modalCheckmark');
+      if (!mark) return;
+      mark.style.display = 'block';
+      mark.classList.add('show');
+      setTimeout(() => {
+        mark.classList.remove('show');
+        mark.style.display = 'none';
+      }, 1200);
+    }
+    // Patch addExpense and saveExpenses to show checkmark
+    const origAddExpense = window.addExpense;
+    window.addExpense = function() {
+      origAddExpense();
+      showModalCheckmark();
+    };
+    const origSaveExpenses = window.saveExpenses;
+    window.saveExpenses = function() {
+      origSaveExpenses();
+      showModalCheckmark();
+    };
+  </script>
+  <!-- Opening animation overlay -->
+  <div id="openingOverlay" class="opening-overlay">
+    <svg viewBox="0 0 1920 1080" width="100%" height="100%" style="position:absolute;top:0;left:0;width:100vw;height:100vh;">
+      <defs>
+        <radialGradient id="swirlGradient" cx="50%" cy="50%" r="80%">
+          <stop offset="0%" stop-color="#a259f7"/>
+          <stop offset="50%" stop-color="#43e7ad"/>
+          <stop offset="100%" stop-color="#1b1b3a"/>
+        </radialGradient>
+      </defs>
+      <circle id="swirlCircle" cx="960" cy="540" r="0" fill="url(#swirlGradient)">
+        <animate attributeName="r" from="0" to="1400" dur="1.2s" fill="freeze"/>
+      </circle>
+    </svg>
+    <div class="overlay-title">Welcome to Your Budget</div>
+  </div>
+  <script>
+    // Opening animation overlay logic
+    window.addEventListener('DOMContentLoaded', () => {
+      const overlay = document.getElementById('openingOverlay');
+      setTimeout(() => {
+        overlay.classList.add('fade-out');
+        setTimeout(() => overlay.style.display = 'none', 900);
+        // Animate dashboard entrance after overlay
+        document.querySelector('.main-content').classList.add('entrance-animate');
+        document.querySelectorAll('.animated-card').forEach((el, i) => {
+          setTimeout(() => el.classList.add('card-animate'), 200 + i * 180);
+        });
+      }, 1500);
+    });
+  </script>
+  <script>
+// ... existing code ...
+// Personalized Welcome with Motivational Quote
+const welcomeNames = ["Money Master", "Smart Saver", "Finance Pro", "Budget Hero", "Wealth Builder"];
+const motivationQuotes = [
+  "Every penny saved is a penny earned!",
+  "Small steps every day lead to big results.",
+  "Your future self will thank you for saving today.",
+  "Discipline is the bridge between goals and accomplishment.",
+  "Dream big, save bigger!"
+];
+function showPersonalWelcome() {
+  const name = welcomeNames[Math.floor(Math.random() * welcomeNames.length)];
+  const quote = motivationQuotes[Math.floor(Math.random() * motivationQuotes.length)];
+  document.getElementById('welcomeText').textContent = `Welcome, ${name}!`;
+  document.getElementById('motivationQuote').textContent = `"${quote}"`;
+}
+showPersonalWelcome();
+// Animate welcome
+const personalWelcome = document.getElementById('personalWelcome');
+personalWelcome.classList.add('show');
+setTimeout(() => personalWelcome.classList.remove('show'), 3500);
+// Animated Savings Progress Bar
+function updateSavingsProgressBar() {
+  const salary = parseFloat(document.getElementById('salary').value) || 0;
+  const savingGoal = parseFloat(document.getElementById('saving-goal').value) || 0;
+  const totalSpent = expenses.reduce((a, b) => a + b.amount, 0);
+  const saved = salary - totalSpent;
+  const percent = savingGoal ? Math.max(0, Math.min(100, Math.round((saved / savingGoal) * 100))) : 0;
+  const bar = document.getElementById('savingsProgressBar');
+  const text = document.getElementById('savingsProgressText');
+  bar.style.width = percent + '%';
+  text.textContent = `₹${saved.toLocaleString()} / ₹${savingGoal.toLocaleString()} (${percent}%)`;
+  // Confetti celebration if goal reached
+  if (percent >= 100 && savingGoal > 0) launchConfetti();
+}
+// Confetti Celebration
+function launchConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.style.display = 'block';
+  const ctx = canvas.getContext('2d');
+  const confetti = [];
+  for (let i = 0; i < 120; i++) {
+    confetti.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * -canvas.height,
+      r: 6 + Math.random() * 8,
+      d: 2 + Math.random() * 4,
+      color: `hsl(${Math.random()*360},90%,60%)`,
+      tilt: Math.random() * 10 - 5,
+      tiltAngle: 0,
+      tiltAngleInc: (Math.random() * 0.07) + 0.05
+    });
+  }
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confetti.forEach(c => {
+      ctx.beginPath();
+      ctx.ellipse(c.x, c.y, c.r, c.r/2, c.tilt, 0, 2 * Math.PI);
+      ctx.fillStyle = c.color;
+      ctx.fill();
+    });
+    update();
+    frame++;
+    if (frame < 120) requestAnimationFrame(draw);
+    else setTimeout(() => { canvas.style.display = 'none'; }, 1200);
+  }
+  function update() {
+    confetti.forEach(c => {
+      c.y += c.d;
+      c.x += Math.sin(c.tiltAngle) * 2;
+      c.tiltAngle += c.tiltAngleInc;
+      if (c.y > canvas.height) {
+        c.y = -10;
+        c.x = Math.random() * canvas.width;
+      }
+    });
+  }
+  draw();
+}
+// Animated Savings Chart
+function drawAnimatedSavingsChart() {
+  const ctx = document.getElementById('animatedSavingsChart').getContext('2d');
+  const days = [];
+  const salary = parseFloat(document.getElementById('salary').value) || 0;
+  const expensesByDay = {};
+  expenses.forEach(e => {
+    if (!expensesByDay[e.day]) expensesByDay[e.day] = 0;
+    expensesByDay[e.day] += e.amount;
+  });
+  const labels = Object.keys(expensesByDay);
+  const data = labels.map(day => salary - expensesByDay[day]);
+  // Animate line chart
+  ctx.clearRect(0, 0, 800, 320);
+  ctx.save();
+  ctx.strokeStyle = '#a259f7';
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  let prevX = 60, prevY = 260;
+  for (let i = 0; i < data.length; i++) {
+    const x = 60 + i * ((800-120)/Math.max(1,labels.length-1));
+    const y = 260 - (data[i] / Math.max(...data,1)) * 200;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+    prevX = x; prevY = y;
+  }
+  ctx.stroke();
+  // Draw points
+  ctx.fillStyle = '#43e7ad';
+  for (let i = 0; i < data.length; i++) {
+    const x = 60 + i * ((800-120)/Math.max(1,labels.length-1));
+    const y = 260 - (data[i] / Math.max(...data,1)) * 200;
+    ctx.beginPath();
+    ctx.arc(x, y, 8, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+// Hook up updates
+function updateAllSurpriseFeatures() {
+  updateSavingsProgressBar();
+  drawAnimatedSavingsChart();
+}
+document.getElementById('salary').addEventListener('input', updateAllSurpriseFeatures);
+document.getElementById('spending-limit').addEventListener('input', updateAllSurpriseFeatures);
+document.getElementById('saving-goal').addEventListener('input', updateAllSurpriseFeatures);
+document.getElementById('expense').addEventListener('input', updateAllSurpriseFeatures);
+// Also call after adding/removing expenses
+// Call updateAllSurpriseFeatures in addExpense, saveExpenses, and wherever expenses change
+const origAddExpenseSurprise = window.addExpense;
+window.addExpense = function() {
+  origAddExpenseSurprise();
+  updateAllSurpriseFeatures();
+};
+const origSaveExpensesSurprise = window.saveExpenses;
+window.saveExpenses = function() {
+  origSaveExpensesSurprise();
+  updateAllSurpriseFeatures();
+};
+// Initial call
+updateAllSurpriseFeatures();
+// ... existing code ...
+  </script>
+</body>
+</html> 
